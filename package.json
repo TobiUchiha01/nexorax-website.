@@ -1,0 +1,19 @@
+
+{
+  "name": "nexorax",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nexorax legal classic movie app",
+  "scripts": {
+    "build": "mkdir -p www && cp index.html www/index.html",
+    "android:init": "npx cap add android",
+    "android:sync": "npm run build && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
+}
