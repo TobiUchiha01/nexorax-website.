@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="Discover NexoraX, view app information, and download the official Android APK.">
+  <title>NexoraX — Official App Download</title>
+
+  <style>
+    /* ---------- BASIC SETTINGS ---------- */
+    :root {
+      --bg: #090909;
+      --panel: #141414;
+      --panel-light: #1d1d1d;
+      --red: #e50914;
+      --red-hover: #ff2631;
+      --text: #f5f5f5;
+      --muted: #b6b6b6;
+      --border: #303030;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    /* ---------- TOP NAVIGATION ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(9, 9, 9, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      min-height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      color: var(--text);
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--red);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      display: inline-block;
+      border: 0;
+      border-radius: 7px;
+      padding: 13px 20px;
+      background: var(--red);
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--red-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #777;
+    }
+
+    .btn-secondary:hover {
+      background: var(--panel-light);
+    }
+
+    /* ---------- HERO SECTION ---------- */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 85px 0 75px;
+      background:
+        radial-gradient(ellipse at 85% 25%, rgba(229, 9, 20, 0.23), transparent 42%),
+        linear-gradient(130deg, #111 0%, #090909 65%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: #ff777d;
+      background: rgba(229, 9, 20, 0.12);
+      border: 1px solid rgba(229, 9, 20, 0.35);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: var(--red);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 620px;
+      margin-bottom: 25px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .small-note {
+      color: #929292;
+      font-size: 0.85rem;
+    }
+
+    /* ---------- GENERAL SECTIONS ---------- */
+    section {
+      padding: 65px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 26px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(1.7rem, 5vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    /* ---------- MOVIE POSTER PLACEHOLDERS ---------- */
+    .poster-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .poster {
+      min-height: 235px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent 75%),
+        var(--poster-bg, linear-gradient(135deg, #4b1117, #111));
+      border: 1px solid #383838;
+    }
+
+    .poster::before {
+      content: "POSTER PREVIEW";
+      position: absolute;
+      top: 13px;
+      left: 12px;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 4px 7px;
+      border-radius: 4px;
+    }
+
+    .poster h3 {
+      position: relative;
+      font-size: 1.1rem;
+      line-height: 1.25;
+    }
+
+    .poster p {
+      position: relative;
+      color: #d0d0d0;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+
+    .poster-one {
+      --poster-bg: linear-gradient(145deg, #68161d, #171717 65%, #090909);
+    }
+
+    .poster-two {
+      --poster-bg: linear-gradient(145deg, #123c51, #16131e 65%, #080808);
+    }
+
+    .poster-three {
+      --poster-bg: linear-gradient(145deg, #76521b, #241518 65%, #090909);
+    }
+
+    .poster-four {
+      --poster-bg: linear-gradient(145deg, #37305f, #251018 65%, #090909);
+    }
+
+    .poster-disclaimer {
+      color: #888;
+      font-size: 0.82rem;
+      margin-top: 14px;
+    }
+
+    /* ---------- APP INFORMATION ---------- */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .info-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .info-card .symbol {
+      color: var(--red);
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 7px;
+      font-size: 1.05rem;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    /* ---------- DOWNLOAD PANEL ---------- */
+    .download-panel {
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(229, 9, 20, 0.18), transparent 45%),
+        var(--panel);
+      border: 1px solid #3a2527;
+      border-radius: 14px;
+      padding: clamp(22px, 5vw, 40px);
+    }
+
+    .download-panel h2 {
+      font-size: clamp(1.7rem, 5vw, 2.3rem);
+      margin-bottom: 10px;
+    }
+
+    .download-panel p {
+      color: var(--muted);
+      margin-bottom: 18px;
+      max-width: 700px;
+    }
+
+    .download-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      color: #c8c8c8;
+      font-size: 0.9rem;
+      margin: 18px 0;
+    }
+
+    .download-meta span::before {
+      content: "• ";
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    /* ---------- INSTALLATION STEPS ---------- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 20px 20px 66px;
+      counter-increment: step;
+    }
+
+    .step::before {
+      content: counter(step);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin-bottom: 5px;
+      font-size: 1rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .security-note {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 3px solid var(--red);
+      background: #171112;
+      color: #d6d6d6;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details p {
+      color: var(--muted);
+      margin-top: 12px;
+      font-size: 0.94rem;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    /* ---------- SMALL SCREENS ---------- */
+    @media (max-width: 760px) {
+      .nav {
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero {
+        padding: 62px 0 55px;
+      }
+
+      .poster-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .poster {
+        min-height: 205px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .poster {
+        min-height: 175px;
+        padding: 11px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ---------- NAVIGATION ---------- -->
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#home" aria-label="NexoraX home">NEXORA<span>X</span></a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#movies">Posters</a>
+        <a href="#about">About</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ---------- HERO ---------- -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow">Official NexoraX Website</span>
+          <h1>Your next screen-time <span>starts here.</span></h1>
+          <p>
+            Discover NexoraX, explore the app information, and get the Android
+            installation file from this website. The website itself does not
+            stream movies.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#download">↓ Download the APK</a>
+            <a class="btn btn-secondary" href="#about">Explore NexoraX</a>
+          </div>
+
+          <p class="small-note">
+            Android app download • Check the app details and permissions before installing
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- POSTER PREVIEWS ---------- -->
+    <section id="movies">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Featured poster previews</h2>
+          <p>
+            A cinematic preview area for your website. Replace these sample
+            panels with movie artwork you own or have permission to display.
+          </p>
+        </div>
+
+        <div class="poster-grid">
+          <article class="poster poster-one">
+            <div>
+              <h3>Crimson Horizon</h3>
+              <p>Sample poster • Replace this title</p>
+            </div>
+          </article>
+
+          <article class="poster poster-two">
+            <div>
+              <h3>Beyond the Stars</h3>
+              <p>Sample poster • Replace this title</p>
+            </div>
+          </article>
+
+          <article class="poster poster-three">
+            <div>
+              <h3>Last Kingdom</h3>
+              <p>Sample poster • Replace this title</p>
+            </div>
+          </article>
+
+          <article class="poster poster-four">
+            <div>
+              <h3>Shadow Protocol</h3>
+              <p>Sample poster • Replace this title</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="poster-disclaimer">
+          These are illustrative CSS poster panels, not real movie listings or claims that
+          these titles are available in the app.
+        </p>
+      </div>
+    </section>
+
+    <!-- ---------- ABOUT THE APP ---------- -->
+    <section id="about">
+      <div class="container">
+        <div class="section-heading">
+          <h2>About NexoraX</h2>
+          <p>
+            Use this section to explain what your Android app really does.
+            Update the details below so they accurately describe your finished app.
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <div class="symbol" aria-hidden="true">▶</div>
+            <h3>Made for Android</h3>
+            <p>
+              Get the Android APK from the official download link on this page.
+              Confirm compatibility with your device before installing.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <div class="symbol" aria-hidden="true">▣</div>
+            <h3>Simple experience</h3>
+            <p>
+              Describe your app's actual features here, such as browsing a catalogue
+              or playing video from sources you are authorized to use.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <div class="symbol" aria-hidden="true">✓</div>
+            <h3>Know what you install</h3>
+            <p>
+              Publish the app version, file size, required Android version, and
+              a way for users to contact you with questions.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- DOWNLOAD ---------- -->
+    <section id="download">
+      <div class="container">
+        <div class="download-panel">
+          <span class="eyebrow">Android APK</span>
+          <h2>Download NexoraX</h2>
+          <p>
+            Use the button below to download the NexoraX Android installation file.
+            Before publishing, replace the placeholder link with the direct URL to
+            your real APK hosted on a trusted service.
+          </p>
+
+          <!-- IMPORTANT:
+               Replace YOUR_APP_FILE_URL_HERE with your real APK download URL.
+               Example format: https://your-host.example/files/nexorax.apk
+               The example above is only a format illustration, not a real URL.
+          -->
+          <a
+            class="btn"
+            href="YOUR_APP_FILE_URL_HERE"
+            download
+            rel="noopener"
+          >↓ Download for Android</a>
+
+          <div class="download-meta">
+            <span>App: NexoraX</span>
+            <span>Version: Add your version</span>
+            <span>File size: Add APK size</span>
+            <span>Android: Add minimum version</span>
+          </div>
+
+          <p class="small-note">
+            Only install APK files from sources you trust. Android may ask you to
+            approve installation from the browser or file manager you used.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- INSTALLATION GUIDE ---------- -->
+    <section id="install">
+      <div class="container">
+        <div class="section-heading">
+          <h2>How to install NexoraX</h2>
+          <p>
+            Android may show slightly different menus depending on your phone
+            model and Android version.
+          </p>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <h3>Download the APK</h3>
+            <p>Tap the download button above and wait for the APK file to finish downloading.</p>
+          </article>
+
+          <article class="step">
+            <h3>Open the downloaded file</h3>
+            <p>Open your browser's Downloads list or use your phone's Files app to find the APK.</p>
+          </article>
+
+          <article class="step">
+            <h3>Review the install prompt</h3>
+            <p>If Android blocks the installation, only continue if you trust the source and understand the app's permissions. You may need to allow this source temporarily in Settings.</p>
+          </article>
+
+          <article class="step">
+            <h3>Install and open</h3>
+            <p>Tap Install, wait for it to finish, then open NexoraX. Turn off any temporary “allow from this source” permission afterward if you no longer need it.</p>
+          </article>
+        </div>
+
+        <div class="security-note">
+          <strong>Safety tip:</strong> Never ask visitors to disable Google Play Protect or other
+          security protections. Publish only an APK you have checked, and explain any
+          permissions your app requests.
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- FAQ ---------- -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Frequently asked questions</h2>
+          <p>Basic answers for people visiting the NexoraX download website.</p>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>Is NexoraX free to download?</summary>
+            <p>
+              Update this answer to match your app's actual pricing. If the APK is free,
+              state that clearly and disclose any paid features or subscriptions.
+            </p>
+          </details>
+
+          <details>
+            <summary>Does this website stream movies?</summary>
+            <p>
+              No. This page is a landing page for app information and an APK download.
+              Video playback, if offered, must be provided by the app or an authorized
+              streaming service.
+            </p>
+          </details>
+
+          <details>
+            <summary>Why does Android warn me about installing an APK?</summary>
+            <p>
+              APKs installed outside an app store can trigger security prompts. Only
+              install the file if you trust its source, have checked the app, and are
+              comfortable with the requested permissions.
+            </p>
+          </details>
+
+          <details>
+            <summary>What if the download button does not work?</summary>
+            <p>
+              The site owner must replace the placeholder URL with a valid, publicly
+              accessible APK link. Check that the file is uploaded and the URL is correct.
+            </p>
+          </details>
+
+          <details>
+            <summary>Where do the movies in the app come from?</summary>
+            <p>
+              The app owner should explain the actual sources. Only distribute or stream
+              movies when you have the necessary rights or permission.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ---------- FOOTER ---------- -->
+  <footer>
+    <div class="container footer-inner">
+      <p>© <span id="year">2026</span> NexoraX. All rights reserved.</p>
+      <p><a href="#home">Back to top ↑</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Updates the copyright year automatically.
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
