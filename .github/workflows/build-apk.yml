@@ -41,6 +41,16 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
+      - name: Prepare app icon
+        run: |
+          mkdir -p assets
+          cp icon.png assets/icon.png
+
+      - name: Generate Android icons
+        run: |
+          npm install --no-save @capacitor/assets
+          npx capacitor-assets generate --android
+
       - name: Sync Android app
         run: npx cap sync android
 
